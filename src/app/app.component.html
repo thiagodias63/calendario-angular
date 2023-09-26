@@ -3,7 +3,7 @@
   <h1>{{ currentMonthName }} de {{ currentYear }}</h1>
   <button type="button" (click)="changeMonth(+1)">Próximo ({{ nextMonthName }})</button>
 </header>
-<table>
+<table *ngIf="birthDays$ | async as birthDays">
   <thead>
     <tr>
       <th>Domingo</th>
@@ -21,6 +21,8 @@
         <span class="day-badge">
           {{ day }}
         </span>
+        <app-birthday-counter-of-the-day [day]="day" [month]="currentMonth + 1"
+          [birthDays]="birthDays"></app-birthday-counter-of-the-day>
       </td>
     </tr>
   </tbody>
