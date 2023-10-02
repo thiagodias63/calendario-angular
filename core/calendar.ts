@@ -1,5 +1,5 @@
 import * as dayjs from 'dayjs';
-import { Week } from './week';
+import { Day, Week } from './week';
 
 export class Calendar {
   currentMonth = new Date().getMonth();
@@ -44,21 +44,21 @@ export class Calendar {
       let lastDayOfLastMonth: number | string = dayjs().set('D', this._getDaysInMonth(this.currentMonth - 1, this.currentYear)).set('month', this.currentMonth - 1).set('year', this.currentYear).format('DD');
       lastDayOfLastMonth = Number(lastDayOfLastMonth) + 1
 
-      const days: number[] = [];
+      const days: Day[] = [];
       // then remove 1 by 1 until this.firstDayOfCurrentMonth = 0
       for (let copyFirstDayOfCurrentMonth = this.firstDayOfCurrentMonth; copyFirstDayOfCurrentMonth > 0; (copyFirstDayOfCurrentMonth--, lastDayOfLastMonth--)) {
-        days.unshift(lastDayOfLastMonth)
+        days.unshift({ day: lastDayOfLastMonth, isCurrentMonth: false })
       }
       // then add the days of current month
       for (let copyFirstDayOfCurrentMonth = this.firstDayOfCurrentMonth, i = 1; copyFirstDayOfCurrentMonth <= 6; copyFirstDayOfCurrentMonth++, i++) {
-        days.push(i)
+        days.push({ day: i, isCurrentMonth: true })
       }
       this.weeks.push({ days })
     } else {
       // just set the first week
-      const days: number[] = [];
+      const days: Day[] = [];
       for (let i = 1; i <= 7; i++) {
-        days.push(i)
+        days.push({ day: i, isCurrentMonth: true })
       }
       this.weeks.push({ days })
     }
@@ -69,15 +69,15 @@ export class Calendar {
     this.lastDayOfCurrentMonth = dayjs().set('day', this.daysInCurrentMonth).set('month', this.currentMonth).set('year', this.currentYear).day();
     this._getMiddleWeeksOfMonth();
     if (this.lastDayOfCurrentMonth < 6) {
-      const days: number[] = [];
+      const days: Day[] = [];
       // start a week of the last days of month
       for (let i = this.lastDayOfCurrentMonth; i >= 0; i--) {
-        days.push(this.daysInCurrentMonth - i + 1);
+        days.push({ day: this.daysInCurrentMonth - i + 1, isCurrentMonth: true });
       }
       // get last day of the current month
       // then add 1 by 1 until this.lastDayOfCurrentMonth - 6  = 0
       for (let copyDaysInCurrentMonth = this.lastDayOfCurrentMonth, i = 1; copyDaysInCurrentMonth < 6; (copyDaysInCurrentMonth++, i++)) {
-        days.push(i);
+        days.push({ day: i, isCurrentMonth: false });
       }
       this.weeks.push({ days });
     }
@@ -95,15 +95,15 @@ export class Calendar {
       this.weeks.push({ days: this._addDaysInMiddleOfMonth() });
     }
 
-    if ((this.daysInCurrentMonth + 1) % this.weeks[this.weeks.length - 1].days[6] >= 7) {
+    if ((this.daysInCurrentMonth + 1) % this.weeks[this.weeks.length - 1].days[6].day >= 7) {
       this.weeks.push({ days: this._addDaysInMiddleOfMonth() });
     }
   }
 
-  private _addDaysInMiddleOfMonth(): number[] {
-    const days: number[] = [];
+  private _addDaysInMiddleOfMonth(): Day[] {
+    const days: Day[] = [];
     for (let currentIndex = 0; currentIndex < 7; currentIndex++, this.currentInterator++) {
-      days.push(this.currentInterator)
+      days.push({ day: this.currentInterator, isCurrentMonth: true })
     }
     return days;
   }

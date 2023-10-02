@@ -1,29 +1,63 @@
-<header>
-  <button type="button" (click)="changeMonth(-1)">Anterior ({{ calendar.prevMonthName }})</button>
-  <h1>{{ calendar.currentMonthName }} de {{ calendar.currentYear }}</h1>
-  <button type="button" (click)="changeMonth(+1)">Próximo ({{ calendar.nextMonthName }})</button>
-</header>
-<table *ngIf="birthDays$ | async as birthDays">
-  <thead>
-    <tr>
-      <th>Domingo</th>
-      <th>Segunda-feira</th>
-      <th>Terça-feira</th>
-      <th>Quarta-feira</th>
-      <th>Quinta-feira</th>
-      <th>Sexta-feira</th>
-      <th>Sábado</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let week of calendar.weeks">
-      <td *ngFor="let day of week.days">
-        <span class="day-badge">
-          {{ day }}
-        </span>
-        <app-birthday-counter-of-the-day [day]="day" [month]="calendar.currentMonth + 1"
-          [birthDays]="birthDays"></app-birthday-counter-of-the-day>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<main>
+
+  <nav>
+    <ul>
+      <li>Dashboard</li>
+      <li>Trending</li>
+      <li>Colaborations</li>
+    </ul>
+  </nav>
+
+
+  <section>
+    <header>
+      <h1>{{ calendar.currentMonthName }} {{ calendar.currentYear }}</h1>
+      <div>
+        <button type="button" (click)="changeMonth(-1)" [title]="'Prev ('+ calendar.prevMonthName + ')'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24" fill="none">
+            <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#000000" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button type="button" (click)="changeMonth(+1)" [title]="'Next ('+ calendar.nextMonthName +')'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24" fill="none">
+            <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </header>
+    <table *ngIf="birthDays$ | async as birthDays">
+      <thead>
+        <tr>
+          <th>Sun</th>
+          <th>Mon</th>
+          <th>Tue</th>
+          <th>Wed</th>
+          <th>Thu</th>
+          <th>Fry</th>
+          <th>Sat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of calendar.weeks">
+          <td *ngFor="let day of week.days" [ngClass]="{'day-opacity': !day.isCurrentMonth}">
+            <span class="day-badge">
+              {{ day.day | dayPipe }}
+            </span>
+            <app-birthday-counter-of-the-day [day]="day.day" [month]="calendar.currentMonth + 1"
+              [birthDays]="birthDays"></app-birthday-counter-of-the-day>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <aside>
+    <h1>Upcoming</h1>
+    <hr>
+    <ul>
+      <li>Some</li>
+    </ul>
+  </aside>
+
+</main>

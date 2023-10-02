@@ -1,20 +1,51 @@
-/* background: #eff5f5 */
 /* divisors td color: #fafafa */
-* {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+nav {
+  background-color: #0b1903;
+  position: block;
+  height: 100vh;
+  color: white;
+  font-weight: bold;
+}
+main {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 100px;
+}
+section {
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+table {
+  border-spacing: 0px;
+}
+thead tr th:nth-child(1) {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+thead tr th:nth-child(7) {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+th {
+  border: 1px solid #eff5f5;
+  background-color: #eff5f5;
+  padding: 10px 0;
 }
 td {
-  width: 14vw;
+  width: 7vw;
   height: 120px;
   border: 1px solid #fafafa;
   border-radius: 2px;
   position: relative;
 }
 .day-badge {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   border-radius: 50%;
   padding: 2px 3px;
-  background-color: lightblue;
+  /* background-color: lightblue; */
   color: black;
   width: 1.12rem;
   height: 1.12rem;
@@ -26,16 +57,14 @@ td {
   justify-content: center;
 }
 header {
-  position: sticky;
+  /* position: sticky; */
   z-index: 1;
   top: 0;
-  background-color: aliceblue;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  padding: 10px 20px;
   margin: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
 }
@@ -44,12 +73,17 @@ header h1 {
   color: rgb(14, 14, 14);
 }
 header button {
-  color: white;
-  background-color: blue;
-  border: 2px solid blue;
-  padding: 10px 16px;
-  border-radius: 15px;
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  margin-left: 10px;
+  padding: 5px;
 }
 header button:hover {
   cursor: pointer;
+}
+.day-opacity {
+  opacity: 0.5;
 }
