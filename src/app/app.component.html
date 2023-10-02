@@ -1,7 +1,7 @@
 <header>
-  <button type="button" (click)="changeMonth(-1)">Anterior ({{ prevMonthName }})</button>
-  <h1>{{ currentMonthName }} de {{ currentYear }}</h1>
-  <button type="button" (click)="changeMonth(+1)">Próximo ({{ nextMonthName }})</button>
+  <button type="button" (click)="changeMonth(-1)">Anterior ({{ calendar.prevMonthName }})</button>
+  <h1>{{ calendar.currentMonthName }} de {{ calendar.currentYear }}</h1>
+  <button type="button" (click)="changeMonth(+1)">Próximo ({{ calendar.nextMonthName }})</button>
 </header>
 <table *ngIf="birthDays$ | async as birthDays">
   <thead>
@@ -16,12 +16,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let week of weeks">
+    <tr *ngFor="let week of calendar.weeks">
       <td *ngFor="let day of week.days">
         <span class="day-badge">
           {{ day }}
         </span>
-        <app-birthday-counter-of-the-day [day]="day" [month]="currentMonth + 1"
+        <app-birthday-counter-of-the-day [day]="day" [month]="calendar.currentMonth + 1"
           [birthDays]="birthDays"></app-birthday-counter-of-the-day>
       </td>
     </tr>
